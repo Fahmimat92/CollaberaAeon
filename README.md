@@ -13,7 +13,7 @@ Follow these steps sequentially to clone, configure, and boot the application en
 Before starting, ensure your machine has the following global environments configured:
 * **Node.js** >= 18
 * **Java Development Kit (JDK)** == 17 *(Required for modern Gradle compatibility)*
-* **Android Studio** (with an active Virtual Device) and/or **Xcode** (macOS only)
+* **Android Studio** (with an active Virtual Device - minSdkVersion 24/targetSdkVersion 36) and/or **Xcode** (macOS only)
 
 ## Step 1: Clone the project in to your local
 
@@ -70,7 +70,7 @@ You've successfully run CollaberaAeon App. :partying_face:
 > **Note**: This is a simple banking application called Aeon Bank Apps.
 
 There are 4 main screen and feature in this apps which is :
-- Login screen : This screen will authenticate user to login into our home screen.
+- Login screen : This screen will authenticate user to login into our home screen. User login will be persist until user opt to logout.
 - Signup screen : This screen is to register and signup new user for using the apps.
-- Home screen : This is the landing screen once the user signup and able to login with the list of transaction.
-- Detail screen : User able to view the full detail and have the option to share it externally.
+- Home screen : This is the landing screen once the user signup and able to login and view list of transaction.
+- Detail screen : User able to view the full transaction detail and have the option to share it externally.
