@@ -1,97 +1,76 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Collabera Assessment
 
-# Getting Started
+A clean, modern React Native mobile dashboard and secure transaction receipt sharing module built with utility state management, dynamic data models, and native UI capturing features.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+---
 
-## Step 1: Start Metro
+## 🚀 Quick Start Guide
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+Follow these steps sequentially to clone, configure, and boot the application environment on your local development device.
+
+### Prerequisites
+
+Before starting, ensure your machine has the following global environments configured:
+* **Node.js** >= 18
+* **Java Development Kit (JDK)** == 17 *(Required for modern Gradle compatibility)*
+* **Android Studio** (with an active Virtual Device) and/or **Xcode** (macOS only)
+
+## Step 1: Clone the project in to your local
+
+First, make sure you have setup your github in your desktop.
+
+Then proceed to run this command to clone the repository.
+
+```sh
+git clone https://github.com/Fahmimat92/CollaberaAeon.git
+```
+
+## Step 2: Basic step to run
+
+Before we started to run this project, start with installing the dependencies first by using this command :
+
+```sh
+npm install
+```
+
+## Step 3: Build and run your app
+
+First, you will need to run Metro, the JavaScript build tool for React Native.
 
 To start the Metro dev server, run the following command from the root of your React Native project:
 
 ```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
+npm run start
 ```
 
-## Step 2: Build and run your app
-
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
+Once Metro is up and running, open another terminal and run this command to run your apps on android physical device/simulator device.
 ```sh
-# Using npm
 npm run android
-
-# OR using Yarn
-yarn android
 ```
 
-### iOS
-
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
+Optional : You can manually open your android simulator device from your AVD Manager before running the apps. Kindly check the simulator status by running this command.
 ```sh
-bundle install
+adb devices
 ```
 
-Then, and every time you update your native dependencies, run:
-
-```sh
-bundle exec pod install
-```
-
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+If everything is set up correctly, you should see your new app running in the Android Emulator, or your connected device.
 
 This is one way to run your app — you can also build it directly from Android Studio or Xcode.
 
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
 ## Congratulations! :tada:
 
-You've successfully run and modified your React Native App. :partying_face:
+You've successfully run CollaberaAeon App. :partying_face:
 
-### Now what?
+## 📱 App Preview
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+| Login Screen | Register Screen | Home Screen | Detail Screen |
+|---|---|---|---|
+| <img src="./screenshot/ss1.png" width="200"> | <img src="./screenshot/ss2.png" width="200"> | <img src="./screenshot/ss3.png" width="200"> | <img src="./screenshot/ss4.png" width="200"> |
 
-# Troubleshooting
+> **Note**: This is a simple authentication application called Aeon Bank Apps.
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+There are 4 main screen and feature in this apps which is :
+- Login screen : This screen will authenticate user to login into our home screen.
+- Signup screen : This screen is to register and signup new user for using the apps.
+- Home screen : This is the landing screen once the user signup and able to login with the list of transaction.
+- Detail screen : User able to view the full detail and have the option to share it externally.
