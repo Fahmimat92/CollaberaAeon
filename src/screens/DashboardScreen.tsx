@@ -138,11 +138,11 @@ export default function DashboardScreen() {
         </View>
 
         <Text style={styles.balanceAmountText}>
-          {showBalance ? "RM 12,450.80" : "••••••"}
+          {showBalance ? "RM 12,450.80" : "************"}
         </Text>
 
         <View style={styles.accountNumberRow}>
-          <Text style={styles.accountNumberText}>AEON •••• 9012</Text>
+          <Text style={styles.accountNumberText}>{showBalance ? "AEON 4278 1855 9012" : "AEON **** 9012"}</Text>
         </View>
       </View>
 
