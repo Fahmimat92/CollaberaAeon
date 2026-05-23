@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   View,
   Text,
@@ -6,9 +6,12 @@ import {
   TouchableOpacity,
   ScrollView,
   StatusBar,
-  Platform
+  Platform,
+  Alert
 } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import ViewShot from "react-native-view-shot";
+import Share from "react-native-share";
 import {
   formatCurrency,
   formatDate,
@@ -20,12 +23,43 @@ export default function TransactionDetailScreen({ route, navigation }: any) {
   const insets = useSafeAreaInsets();
   const isCredit = transaction.amount > 0;
 
+  const viewShotRef = useRef<any>(null);
+
+  const handleShareReceiptImage = async () => {
+    if (!viewShotRef.current?.capture) {
+      Alert.alert("Error", "Sharing engine is not ready yet.");
+      return;
+    }
+
+    try {
+      const uri = await viewShotRef.current.capture();
+
+      const textMessage = `AEON Bank Digital Receipt for transaction ${transaction.refId}.`;
+
+      await Share.open({
+        title: "AEON Bank Receipt",
+        subject: "Transaction Detail",
+        message: textMessage,
+        url: uri,
+        type: "image/png",
+      });
+
+    } catch (error: any) {
+      if (error && error.message && error.message.includes("User cancelled")) {
+        console.log("User dismissed native layout share frame.");
+        return;
+      }
+      console.error("Sharing failed: ", error);
+      Alert.alert("Sharing Error", "Could not share your digital receipt image.");
+    }
+  };
+
   return (
     <View style={styles.masterContainer}>
       <StatusBar barStyle="light-content" backgroundColor="#B72773" />
       
       <View style={[styles.brandHeaderBanner, { paddingTop: Math.max(insets.top, 70) }]}>
-          <Text style={styles.bannerMainTitle}>Transaction Detail</Text>
+        <Text style={styles.bannerMainTitle}>Transaction Detail</Text>
         <Text style={styles.bannerSubtitle}>AEON Bank Secure Payment</Text>
       </View>
 
@@ -36,73 +70,92 @@ export default function TransactionDetailScreen({ route, navigation }: any) {
         ]}
         showsVerticalScrollIndicator={false}
       >
-        <View style={styles.receiptCard}>
-          
-          <View style={styles.statusBadgeRow}>
-            <View style={[
-              styles.statusLabelBadge,
-              { backgroundColor: isCredit ? "#E8F5E9" : "#F3F4F6" }
-            ]}>
-              <Text style={[styles.statusBadgeText, { color: isCredit ? "#16A34A" : "#4B5563" }]}>
-                {isCredit ? "📥 Funds Received" : "📤 Successful Transfer"}
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.amountShowcaseBlock}>
-            <Text style={styles.amountLabelText}>Transaction Amount</Text>
-            <Text style={[
-              styles.amountValueText,
-              { color: isCredit ? "#16A34A" : "#d42f2f" }
-            ]}>
-              {isCredit ? "+" : ""}{formatCurrency(transaction.amount)}
-            </Text>
-          </View>
-
-          <View style={styles.receiptDividerLine} />
-
-          <View style={styles.metadataFieldsBlock}>
+        <ViewShot 
+          ref={viewShotRef} 
+          options={{ 
+            format: "png", 
+            quality: 0.95,
+            result: "tmpfile"
+          }}
+          style={styles.viewShotWrapper}
+        >
+          <View style={styles.receiptCard}>
             
-            <View style={styles.detailDataRow}>
-              <Text style={styles.rowFieldLabel}>Recipient Name</Text>
-              <Text style={styles.rowFieldValue}>{transaction.recipientName}</Text>
+            <View style={styles.statusBadgeRow}>
+              <View style={[
+                styles.statusLabelBadge,
+                { backgroundColor: isCredit ? "#E8F5E9" : "#F3F4F6" }
+              ]}>
+                <Text style={[styles.statusBadgeText, { color: isCredit ? "#16A34A" : "#4B5563" }]}>
+                  {isCredit ? "📥 Funds Received" : "📤 Successful Transfer"}
+                </Text>
+              </View>
             </View>
 
-            <View style={styles.detailDataRow}>
-              <Text style={styles.rowFieldLabel}>Transfer Description</Text>
-              <Text style={styles.rowFieldValue}>{transaction.transferName}</Text>
-            </View>
-
-            <View style={styles.detailDataRow}>
-              <Text style={styles.rowFieldLabel}>Reference ID</Text>
-              <Text style={[styles.rowFieldValue, styles.monoRefText]}>
-                {transaction.refId}
+            <View style={styles.amountShowcaseBlock}>
+              <Text style={styles.amountLabelText}>Transaction Amount</Text>
+              <Text style={[
+                styles.amountValueText,
+                { color: isCredit ? "#16A34A" : "#d42f2f" }
+              ]}>
+                {isCredit ? "+" : ""}{formatCurrency(transaction.amount)}
               </Text>
             </View>
 
-            <View style={styles.detailDataRow}>
-              <Text style={styles.rowFieldLabel}>Transaction Date</Text>
-              <Text style={styles.rowFieldValue}>
-                {formatDate(transaction.transferDate)}
-              </Text>
+            <View style={styles.receiptDividerLine} />
+
+            <View style={styles.metadataFieldsBlock}>
+              
+              <View style={styles.detailDataRow}>
+                <Text style={styles.rowFieldLabel}>Recipient Name</Text>
+                <Text style={styles.rowFieldValue}>{transaction.recipientName}</Text>
+              </View>
+
+              <View style={styles.detailDataRow}>
+                <Text style={styles.rowFieldLabel}>Transfer Description</Text>
+                <Text style={styles.rowFieldValue}>{transaction.transferName}</Text>
+              </View>
+
+              <View style={styles.detailDataRow}>
+                <Text style={styles.rowFieldLabel}>Reference ID</Text>
+                <Text style={[styles.rowFieldValue, styles.monoRefText]}>
+                  {transaction.refId}
+                </Text>
+              </View>
+
+              <View style={styles.detailDataRow}>
+                <Text style={styles.rowFieldLabel}>Transaction Date</Text>
+                <Text style={styles.rowFieldValue}>
+                  {formatDate(transaction.transferDate)}
+                </Text>
+              </View>
+
+              <View style={styles.detailDataRow}>
+                <Text style={styles.rowFieldLabel}>Transaction Time</Text>
+                <Text style={styles.rowFieldValue}>
+                  {formatTime(transaction.transferDate)}
+                </Text>
+              </View>
+
             </View>
 
-            <View style={styles.detailDataRow}>
-              <Text style={styles.rowFieldLabel}>Transaction Time</Text>
-              <Text style={styles.rowFieldValue}>
-                {formatTime(transaction.transferDate)}
-              </Text>
+            <View style={styles.securityStampWrapper}>
+              <Text style={styles.securityStampText}>🛡️ Digital Receipt Generated Securely</Text>
             </View>
-
           </View>
+        </ViewShot>
 
-          <View style={styles.securityStampWrapper}>
-            <Text style={styles.securityStampText}>🛡️ Digital Receipt Generated Securely</Text>
-          </View>
-        </View>
-
+        {/* Trigger image generation and sharing */}
         <TouchableOpacity 
           style={styles.shareReceiptButton} 
+          activeOpacity={0.8}
+          onPress={handleShareReceiptImage}
+        >
+          <Text style={styles.shareReceiptButtonText}>Share</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.backButton} 
           activeOpacity={0.8}
           onPress={navigation.goBack}
         >
@@ -140,6 +193,10 @@ const styles = StyleSheet.create({
   scrollLayoutContent: {
     paddingHorizontal: 24,
     paddingTop: 24,
+  },
+  viewShotWrapper: {
+    backgroundColor: "#F9FAFC",
+    borderRadius: 20,
   },
   receiptCard: {
     backgroundColor: "#FFFFFF",
@@ -240,6 +297,19 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginTop: 20,
+    shadowColor: "#B72773",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 6,
+    elevation: 2,
+  },
+  backButton: {
+    backgroundColor: "#ab6589",
+    borderRadius: 14,
+    paddingVertical: 15,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 10,
     shadowColor: "#B72773",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.12,
