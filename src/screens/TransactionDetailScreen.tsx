@@ -145,7 +145,6 @@ export default function TransactionDetailScreen({ route, navigation }: any) {
           </View>
         </ViewShot>
 
-        {/* Trigger image generation and sharing */}
         <TouchableOpacity 
           style={styles.shareReceiptButton} 
           activeOpacity={0.8}
@@ -159,7 +158,7 @@ export default function TransactionDetailScreen({ route, navigation }: any) {
           activeOpacity={0.8}
           onPress={navigation.goBack}
         >
-          <Text style={styles.shareReceiptButtonText}>Return</Text>
+          <Text style={styles.backButtonText}>Return</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -304,17 +303,19 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   backButton: {
-    backgroundColor: "#ab6589",
+    backgroundColor: "transparent",
+    borderWidth: 1.5,
+    borderColor: "#B72773",
     borderRadius: 14,
     paddingVertical: 15,
     alignItems: "center",
     justifyContent: "center",
-    marginTop: 10,
-    shadowColor: "#B72773",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.12,
-    shadowRadius: 6,
-    elevation: 2,
+    marginTop: 12,
+  },
+  backButtonText: {
+    color: "#B72773",
+    fontSize: 15,
+    fontWeight: "700",
   },
   shareReceiptButtonText: {
     color: "#FFFFFF",
