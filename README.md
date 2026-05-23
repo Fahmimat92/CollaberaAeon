@@ -67,7 +67,7 @@ You've successfully run CollaberaAeon App. :partying_face:
 |---|---|---|---|
 | <img src="./screenshot/ss1.png" width="200"> | <img src="./screenshot/ss2.png" width="200"> | <img src="./screenshot/ss3.png" width="200"> | <img src="./screenshot/ss4.png" width="200"> |
 
-> **Note**: This is a simple authentication application called Aeon Bank Apps.
+> **Note**: This is a simple banking application called Aeon Bank Apps.
 
 There are 4 main screen and feature in this apps which is :
 - Login screen : This screen will authenticate user to login into our home screen.
